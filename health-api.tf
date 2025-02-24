@@ -2,15 +2,17 @@ module "health_api" {
   # source = "github.com/msfidelis/linuxtips-curso-containers-ecs-service-module?ref=v1.3.1"
 
 
-  source       = "/Users/matheus/Workspace/linuxtips/linuxtips-curso-containers-ecs-service-module"
+  source       = "/home/thiago/projects/linuxtips-curso-containers-ecs-service-module"
   region       = var.region
   cluster_name = var.cluster_name
 
-  service_name   = "nutrition-health-api"
-  service_port   = "8080"
+  service_name = "nutrition-health-api"
+  service_port = 8080
 
   service_protocol = "http"
-  
+
+  use_service_connect = true
+
   service_cpu    = 256
   service_memory = 512
 

@@ -1,15 +1,17 @@
 module "imc" {
   # source = "github.com/msfidelis/linuxtips-curso-containers-ecs-service-module?ref=v1.3.1"
-  source       = "/Users/matheus/Workspace/linuxtips/linuxtips-curso-containers-ecs-service-module"
+  source       = "/home/thiago/projects/linuxtips-curso-containers-ecs-service-module"
   region       = var.region
   cluster_name = var.cluster_name
 
   service_name   = "nutrition-imc"
-  service_port   = "30000"
+  service_port   = 30000
   service_cpu    = 256
   service_memory = 512
-  
+
   service_protocol = "grpc"
+
+  use_service_connect = true
 
   task_minimum       = 1
   task_maximum       = 3

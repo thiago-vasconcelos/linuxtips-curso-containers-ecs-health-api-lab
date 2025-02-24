@@ -1,16 +1,18 @@
 module "bmr" {
   # source = "github.com/msfidelis/linuxtips-curso-containers-ecs-service-module?ref=v1.3.1"
-  source       = "/Users/matheus/Workspace/linuxtips/linuxtips-curso-containers-ecs-service-module"
+  source       = "/home/thiago/projects/linuxtips-curso-containers-ecs-service-module"
   region       = var.region
   cluster_name = var.cluster_name
 
   service_name   = "nutrition-bmr"
-  service_port   = "30000"
+  service_port   = 30000
   service_cpu    = 256
   service_memory = 512
 
   service_protocol = "grpc"
-  
+
+  use_service_connect = true
+
   task_minimum       = 1
   task_maximum       = 3
   service_task_count = 1
@@ -39,6 +41,10 @@ module "bmr" {
     }
   ]
 
+  // Service Connect
+  service_connect_name = data.aws_ssm_parameter.service_connect_name.value
+  service_connect_arn  = data.aws_ssm_parameter.service_connect_namespace_arn.value
+
   service_discovery_namespace = data.aws_ssm_parameter.service_discovery_namespace.value
 
   service_hosts = [
@@ -51,10 +57,6 @@ module "bmr" {
       value = "http://jaeger-collector.linuxtips-ecs-cluster.internal.com:80"
     }
   ]
-
-  // Service Connect
-  service_connect_name = data.aws_ssm_parameter.service_connect_name.value
-  service_connect_arn  = data.aws_ssm_parameter.service_connect_namespace_arn.value
 
   vpc_id = data.aws_ssm_parameter.vpc.value
 
