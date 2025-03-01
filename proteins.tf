@@ -1,6 +1,6 @@
 module "proteins" {
   # source = "github.com/msfidelis/linuxtips-curso-containers-ecs-service-module?ref=v1.3.1"
-  source = "/home/thiago/projects/linuxtips-curso-containers-ecs-service-module"
+  source = "../linuxtips-curso-containers-ecs-service-module"
 
   region       = var.region
   cluster_name = var.cluster_name
@@ -20,9 +20,7 @@ module "proteins" {
 
   container_image = "fidelissauro/proteins-grpc-service:latest"
 
-  service_listener = data.aws_ssm_parameter.listener_internal.value
-  alb_arn          = data.aws_ssm_parameter.alb_internal.value
-
+  use_lb = false
 
   // Service Connect
   service_connect_name = data.aws_ssm_parameter.service_connect_name.value
